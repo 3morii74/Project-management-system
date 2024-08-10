@@ -8,6 +8,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class ProjectResource extends JsonResource
 {
+    public static $wrap = false;
     /**
      * Transform the resource into an array.
      *
@@ -26,6 +27,5 @@ class ProjectResource extends JsonResource
             'createdBy' => new UserResource($this->createdBy),
             'updatedBy' =>  new UserResource($this->updatedBy),
         ];
-        
     }
 }
