@@ -25,4 +25,11 @@ class Project extends Model
 
         return $this->belongsTo(User::class, 'updated_by');
     }
+    protected static function booted()
+    {
+        static::deleting(function ($project) {
+            // Delete related tasks before deleting the project
+            $project->tasks()->delete();
+        });
+    }
 }
