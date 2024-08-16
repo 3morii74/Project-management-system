@@ -47,12 +47,14 @@ export default function Index({ auth, users, queryParams = null, success }) {
           <h2 className="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
             Users
           </h2>
-          <Link
-            href={route("user.create")}
-            className="bg-emerald-500 py-1 px-3 text-white rounded shadow transition-all hover:bg-emerald-600"
-          >
-            Add new
-          </Link>
+          {auth.user.role !== 3 && ( // Only show the "Add new" button if the user's role is 1
+            <Link
+              href={route("user.create")}
+              className="bg-emerald-500 py-1 px-3 text-white rounded shadow transition-all hover:bg-emerald-600"
+            >
+              Add new
+            </Link>
+          )}
         </div>
       }
     >
@@ -166,22 +168,22 @@ export default function Index({ auth, users, queryParams = null, success }) {
                         </td>
 
                         <td className="px-3 py-2 text-nowrap ">
-                          <Link
-                            href={route("user.edit", user.id)}
-                            className="font-medium text-blue-600 
-                        dark:text-blue-500 hover:underline mx-1"
-                          >
-                            {" "}
-                            Edit
-                          </Link>
-                          <button
-                            onClick={(e) => deleteUser(user)}
-                            className="font-medium text-red-600 
-                        dark:text-red-500 hover:underline mx-1"
-                          >
-                            {" "}
-                            Delete
-                          </button>
+                          {auth.user.role === 1 && (
+                            <>
+                              <Link
+                                href={route("user.edit", user.id)}
+                                className="font-medium text-blue-600 dark:text-blue-500 hover:underline mx-1"
+                              >
+                                Edit
+                              </Link>
+                              <button
+                                onClick={(e) => deleteUser(user)}
+                                className="font-medium text-red-600 dark:text-red-500 hover:underline mx-1"
+                              >
+                                Delete
+                              </button>
+                            </>
+                          )}
                         </td>
                       </tr>
                     ))}

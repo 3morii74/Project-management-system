@@ -10,6 +10,7 @@ export default function TasksTable({
   queryParams = null,
   hideProjectColumn = false,
   success,
+  user,
 }) {
   queryParams = queryParams || {};
 
@@ -46,6 +47,7 @@ export default function TasksTable({
     }
     router.delete(route("task.destroy", task.id));
   };
+
   return (
     <>
       {success && (
@@ -54,14 +56,13 @@ export default function TasksTable({
         </div>
       )}
       <div className="overflow-auto">
-        {" "}
         <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
           <thead
             className="text-xs text-gray-700 uppercase
                 bg-gray-50 dark:bg-gray-700 dark:text-gray-400
                 border-b-2 border-gray-500"
           >
-            <tr className="text-nowrap ">
+            <tr className="text-nowrap">
               <TableHeading
                 name="id"
                 sort_field={queryParams.sort_field}
@@ -74,7 +75,6 @@ export default function TasksTable({
               {!hideProjectColumn && (
                 <th className="px-3 py-3">Project NAME</th>
               )}
-
               <TableHeading
                 name="name"
                 sort_field={queryParams.sort_field}
@@ -83,7 +83,6 @@ export default function TasksTable({
               >
                 Name
               </TableHeading>
-
               <TableHeading
                 name="status"
                 sort_field={queryParams.sort_field}
@@ -108,12 +107,11 @@ export default function TasksTable({
               >
                 Due Date
               </TableHeading>
-              <th className="px-3 py-3"> Created By</th>
+              <th className="px-3 py-3">Created By</th>
               <th className="px-3 py-3">Actions</th>
               <th className="px-3 py-3"></th>
             </tr>
           </thead>
-
           <thead
             className="text-xs text-gray-700 uppercase
                 bg-gray-50 dark:bg-gray-700 dark:text-gray-400
@@ -123,7 +121,6 @@ export default function TasksTable({
               <th className="px-3 py-3"></th>
               <th className="px-3 py-3"></th>
               {!hideProjectColumn && <th className="px-3 py-3"></th>}
-
               <th className="px-3 py-3">
                 <TextInput
                   className="w-full"
@@ -145,7 +142,7 @@ export default function TasksTable({
               </th>
               <th className="px-3 py-3"></th>
               <th className="px-3 py-3"></th>
-              <th className="px-3 py-3"> </th>
+              <th className="px-3 py-3"></th>
               <th className="px-3 py-3"></th>
               <th className="px-3 py-3"></th>
             </tr>
@@ -164,10 +161,9 @@ export default function TasksTable({
                 {!hideProjectColumn && (
                   <td className="px-3 py-2">{task.project.name}</td>
                 )}
-                <th className="px-3 py-2 text-gray-100  hover:underline">
-                  <Link href={route("task.show", task.id)}>{task.name}</Link>{" "}
+                <th className="px-3 py-2 text-gray-100 hover:underline">
+                  <Link href={route("task.show", task.id)}>{task.name}</Link>
                 </th>
-
                 <td className="px-3 py-2">
                   <span
                     className={
@@ -178,34 +174,33 @@ export default function TasksTable({
                     {TASK_STATUS_TEXT_MAP[task.status]}
                   </span>
                 </td>
-
                 <td className="px-3 py-2 text-nowrap">{task.created_at}</td>
                 <td className="px-3 py-2 text-nowrap">{task.due_date}</td>
                 <td className="px-3 py-2">{task.createdBy.name}</td>
-                <td className="px-3 py-2 text-nowrap ">
+                <td className="px-3 py-2 text-nowrap">
                   <Link
                     href={route("task.edit", task.id)}
-                    className="font-medium text-blue-600 
+                    className="font-medium text-blue-600
                         dark:text-blue-500 hover:underline mx-1"
                   >
-                    {" "}
                     Edit
                   </Link>
-                  <button
-                    onClick={(e) => deleteTask(task)}
-                    className="font-medium text-red-600 
+                  {user.role !== 3 && (
+                    <button
+                      onClick={() => deleteTask(task)}
+                      className="font-medium text-red-600
                         dark:text-red-500 hover:underline mx-1"
-                  >
-                    {" "}
-                    Delete
-                  </button>
+                    >
+                      Delete
+                    </button>
+                  )}
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
-      <Pagination links={tasks.meta.links}></Pagination>
+      <Pagination links={tasks.meta.links} />
     </>
   );
 }

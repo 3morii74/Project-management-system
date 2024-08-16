@@ -20,7 +20,7 @@ class ProjectController extends Controller
 
     public function index()
     {
-
+        $user = Auth::user();
         $query = Project::query();
         $sortField = request("sort_field", "created_at");
         $sortDirection = request("sort_direction", "desc");
@@ -36,6 +36,7 @@ class ProjectController extends Controller
             "projects" => ProjectResource::collection($projects),
             'queryParams' => request()->query() ?: null, // This will be an array
             'success' => session('success'),
+            'user' => $user,
         ]);
     }
 

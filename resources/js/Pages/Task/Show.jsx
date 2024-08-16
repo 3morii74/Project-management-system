@@ -8,7 +8,6 @@ import {
 } from "@/constants.jsx";
 export default function Show({ auth, task }) {
   return (
-    
     <AuthenticatedLayout
       user={auth.user}
       header={
@@ -16,12 +15,14 @@ export default function Show({ auth, task }) {
           <h2 className="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
             {`Task "${task.name}"`}
           </h2>
-          <Link
-            href={route("task.edit", task.id)}
-            className="bg-emerald-500 py-1 px-3 text-white rounded shadow transition-all hover:bg-emerald-600"
-          >
-            Edit
-          </Link>
+          {auth.user.role !== 3 && ( // Only show the "Edit" button if the user's role is 1
+            <Link
+              href={route("task.edit", task.id)}
+              className="bg-emerald-500 py-1 px-3 text-white rounded shadow transition-all hover:bg-emerald-600"
+            >
+              Edit
+            </Link>
+          )}
         </div>
       }
     >

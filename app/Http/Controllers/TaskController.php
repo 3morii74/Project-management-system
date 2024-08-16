@@ -21,6 +21,7 @@ class TaskController extends Controller
      */
     public function index()
     {
+        $user = Auth::user();
         $query = Task::query();
         $sortField = request("sort_field", "created_at");
         $sortDirection = request("sort_direction", "desc");
@@ -36,7 +37,7 @@ class TaskController extends Controller
             "tasks" => TaskResource::collection($tasks),
             'queryParams' => request()->query() ?: null, // This will be an array
             'success' => session('success'),
-
+            'user' => $user,
         ]);
     }
 
@@ -105,6 +106,11 @@ class TaskController extends Controller
     {
 
         $data = $request->validated();
+        if (Auth::id() === 3) {
+            if ($task->assigned_user_id !== Auth::id()) {
+                abort(403, 'Unauthorized');
+            }
+        }
         $image = $data['image'] ?? null;
         $data['created_by'] = Auth::id();
         $data['updated_by'] = Auth::id();
@@ -153,6 +159,7 @@ class TaskController extends Controller
             "tasks" => TaskResource::collection($tasks),
             'queryParams' => request()->query() ?: null,
             'success' => session('success'),
+            'user' => $user,
         ]);
     }
 }

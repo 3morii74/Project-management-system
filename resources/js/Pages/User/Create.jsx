@@ -11,6 +11,7 @@ export default function Create({ auth }) {
     password: "",
     password: "",
     password_confirmation: "",
+    role: "",
   });
 
   const onSubmit = (e) => {
@@ -52,6 +53,22 @@ export default function Create({ auth }) {
                 />
 
                 <InputError message={errors.name} className="mt-2" />
+              </div>
+              {/*  */}
+              <div className="mt-4">
+                <InputLabel htmlFor="user_role" value="User role" />
+
+                <TextInput
+                  id="user_role"
+                  type="number"
+                  name="role"
+                  value={data.role}
+                  className="mt-1 block w-full"
+                  isFocused={true}
+                  onChange={(e) => setData("role", e.target.value)}
+                />
+
+                <InputError message={errors.role} className="mt-2" />
               </div>
               <div className="mt-4">
                 <InputLabel htmlFor="user_email" value="User Email" />
