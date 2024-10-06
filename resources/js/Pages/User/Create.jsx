@@ -9,7 +9,6 @@ export default function Create({ auth }) {
     name: "",
     email: "",
     password: "",
-    password: "",
     password_confirmation: "",
     role: "",
   });

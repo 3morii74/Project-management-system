@@ -1,6 +1,6 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head } from "@inertiajs/react";
-import { USER_STATUS_TEXT_MAP, USER_STATUS_CLASS_MAP } from "@/constants.jsx";
+//import { USER_STATUS_TEXT_MAP, USER_STATUS_CLASS_MAP } from "@/constants.jsx";
 import TasksTable from "../Task/TasksTable";
 export default function Show({ auth, user, tasks, queryParams }) {
   queryParams = queryParams || {};
@@ -43,11 +43,11 @@ export default function Show({ auth, user, tasks, queryParams }) {
                     <p className="mt-1">
                       <span
                         className={
-                          "inline-block rounded text-white text-sm px-2 py-1 " +
-                          USER_STATUS_CLASS_MAP[user.status]
+                          "inline-block rounded text-white text-sm px-2 py-1 " 
+                         // USER_STATUS_CLASS_MAP[user.status]
                         }
                       >
-                        {USER_STATUS_TEXT_MAP[user.status]}
+                        {/* {USER_STATUS_TEXT_MAP[user.status]} */}
                       </span>
                     </p>
                   </div>
